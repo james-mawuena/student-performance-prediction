@@ -82,7 +82,7 @@ streamlit run app.py
 
 ## Files
 
-- `Dataset_on_the_academic_performance_of_students_in_12_programs_from_a_private_university.xlsx`: the original data file, unchanged
+- `Dataset on the academic performance of students in 12 programs from a private university.xlsx`: the original data file, unchanged
 - `student_performance_prediction.ipynb`: the full notebook, from loading the data to saving the models
 - `app.py`: the Streamlit web app
 - `model.pkl`: the trained linear regression model
