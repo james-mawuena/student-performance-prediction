@@ -1,6 +1,6 @@
 # Student Final CGPA Predictor
 
-Predicting a student's final CGPA, and whether they will graduate with a good degree, from their first-year results.
+Predicting a student's final CGPA, and which degree class they are likely to graduate with, from their first-year results.
 
 **Live demo:** https://student-cgpa-predictor.streamlit.app/
 
@@ -9,7 +9,7 @@ Predicting a student's final CGPA, and whether they will graduate with a good de
 A student enters their first-year CGPA, their secondary school grade, and their program of study. The app returns two things:
 
 - An estimate of their final CGPA (linear regression)
-- The chance of finishing with a good degree, which here means a CGPA of 3.5 or more (logistic regression)
+- The most likely degree class (First, Second Upper, Second Lower or Third) and the chance for each class (logistic regression)
 
 The idea is an early warning: a school could use this to notice which students may need extra support after first year.
 
@@ -25,6 +25,8 @@ The data file is included in this repository, unchanged, so the notebook can run
 
 **Inputs:** first-year CGPA, secondary school grade, and program of study (turned into one yes/no column per program).
 
+**Degree classes:** First (CGPA 4.50 and above), Second Upper (3.50 to 4.49), Second Lower (2.40 to 3.49) and Third (1.50 to 2.39), using the commonly used 5.0-scale cut-offs. No student in the data was below 1.50.
+
 **Left out on purpose:**
 - Gender. The tool is meant to flag students who need help, so it should not judge anyone by gender. See the fairness check below.
 - CGPA at the end of years 2, 3 and 4. These are part of the final CGPA, so using them would make the score look good without meaning anything.
@@ -36,9 +38,20 @@ The data file is included in this repository, unchanged, so the notebook can run
 | Model | Question | Score | Simple guess to beat |
 | --- | --- | --- | --- |
 | Linear regression | What will the final CGPA be? | Average error of 0.31 CGPA points | 0.59 (guessing the average for everyone) |
-| Logistic regression | Good degree (CGPA 3.5 or more) or not? | 83% correct | 50% (guessing "good degree" for everyone) |
+| Logistic regression | Which degree class? | 72% correct | 43% (guessing "Second Upper" for everyone) |
 
 The linear regression score was checked again on 5 shuffled splits of the data and stayed stable (R2 between 0.68 and 0.71, average 0.69).
+
+How many of the real students in each class the degree class model found:
+
+| Class | Real students in the test group | Found by the model |
+| --- | --- | --- |
+| Third | 47 | 19% |
+| Second Lower | 257 | 77% |
+| Second Upper | 264 | 78% |
+| First | 42 | 64% |
+
+The model does well on the two large classes and finds about 1 in 5 Third Class students. Every wrong answer was one class away from the real one: no Third Class student was called Second Upper or First, and no First Class student was called Third or Second Lower.
 
 ## Fairness check
 
