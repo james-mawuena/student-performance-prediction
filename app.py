@@ -4,7 +4,7 @@ import joblib
 
 model = joblib.load("model.pkl")
 columns = joblib.load("columns.pkl")
-good_degree_model = joblib.load("good_degree_model.pkl")
+class_model = joblib.load("degree_class_model.pkl")
 
 programs = {
     "BCH": "Biochemistry",
@@ -46,11 +46,22 @@ if st.button("Predict"):
     guess = model.predict(row)[0]
     guess = min(max(guess, 0.0), 5.0)
 
-    chance = good_degree_model.predict_proba(row)[0][1]
+    chances = class_model.predict_proba(row)[0]
+    by_class = dict(zip(class_model.classes_, chances))
+    best = max(by_class, key=by_class.get)
+    order = ["First", "Second Upper", "Second Lower", "Third"]
 
     st.success(f"Estimated final CGPA: {guess:.2f}")
-    st.info(f"Chance of a good degree (CGPA 3.5 or more): {chance * 100:.0f}%")
+    st.info(f"Most likely degree class: {best}")
+
+    table = pd.DataFrame({
+        "Degree class": order,
+        "Chance (%)": [round(by_class[c] * 100) for c in order],
+    })
+    st.table(table.set_index("Degree class"))
+
     st.caption(
-        "These are estimates. The CGPA guess is off by about 0.31 points on average, "
-        "and the good-degree answer was right for about 83% of students in testing."
+        "These are estimates. The CGPA guess is off by about 0.31 points on average. "
+        "The degree class was right for about 72% of students in testing, "
+        "but the model finds only about 1 in 5 Third Class students."
     )
