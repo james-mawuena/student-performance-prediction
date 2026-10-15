@@ -31,6 +31,7 @@ st.write(
     "Enter a student's first-year result to get an estimate of their final CGPA. "
     "The model was trained on graduates of Landmark University (2010 to 2014)."
 )
+st.warning("All grades must be on a 5.0 scale. Do not enter grades from a 4.0 scale.")
 
 cgpa100 = st.number_input("First-year CGPA (0 to 5)", 0.0, 5.0, 3.5, 0.01)
 secondary = st.number_input("Secondary school grade (0 to 5)", 0.0, 5.0, 3.5, 0.01)
