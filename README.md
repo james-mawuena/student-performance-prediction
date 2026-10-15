@@ -57,12 +57,14 @@ The model does well on the two large classes and finds about 1 in 5 Third Class 
 
 Gender was not used by the models, but the results were checked by gender on the 610 test students.
 
-| Group | Students | Average error | Good degree: real | Good degree: model said |
-| --- | --- | --- | --- | --- |
-| Female | 215 | 0.305 | 64% | 54% |
-| Male | 395 | 0.319 | 43% | 48% |
+| Group | Students | Average CGPA error | Degree class right | Good degree: real | Good degree: model said |
+| --- | --- | --- | --- | --- | --- |
+| Female | 215 | 0.305 | 73.5% | 64% | 55% |
+| Male | 395 | 0.319 | 71.4% | 43% | 50% |
 
-The size of the errors is about the same for both groups. But the model leans slightly low for women (about 0.14 CGPA points too low on average) and slightly high for men (about 0.12 too high). In this data, women and men start first year at a similar level, but women finish higher on average, and a model that cannot see gender cannot account for that.
+"Good degree" means a CGPA of 3.5 or more (First or Second Upper).
+
+The size of the errors is about the same for both groups. But the model leans slightly low for women (about 0.14 CGPA points too low on average) and slightly high for men (about 0.12 too high). In this data, women and men start first year at a similar level, but women finish higher on average, and a model that cannot see gender cannot account for that. The degree class answer is also right about equally often for both groups.
 
 ## Limitations
 
