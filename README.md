@@ -86,7 +86,7 @@ streamlit run app.py
 - `student_performance_prediction.ipynb`: the full notebook, from loading the data to saving the models
 - `app.py`: the Streamlit web app
 - `model.pkl`: the trained linear regression model
-- `good_degree_model.pkl`: the trained logistic regression model
+- `degree_class_model.pkl`: the trained logistic regression model for the four degree classes
 - `columns.pkl`: the list of input columns the models expect
 - `requirements.txt`: the tools the app needs
 
