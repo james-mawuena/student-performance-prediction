@@ -4,6 +4,7 @@ import joblib
 
 model = joblib.load("model.pkl")
 columns = joblib.load("columns.pkl")
+good_degree_model = joblib.load("good_degree_model.pkl")
 
 programs = {
     "BCH": "Biochemistry",
@@ -44,5 +45,11 @@ if st.button("Predict"):
     guess = model.predict(row)[0]
     guess = min(max(guess, 0.0), 5.0)
 
+    chance = good_degree_model.predict_proba(row)[0][1]
+
     st.success(f"Estimated final CGPA: {guess:.2f}")
-    st.caption("This is an estimate. On average the model is off by about 0.31 CGPA points.")
+    st.info(f"Chance of a good degree (CGPA 3.5 or more): {chance * 100:.0f}%")
+    st.caption(
+        "These are estimates. The CGPA guess is off by about 0.31 points on average, "
+        "and the good-degree answer was right for about 83% of students in testing."
+    )
